@@ -28,7 +28,7 @@ class AccountsController extends Component
     
     public $domain="";
     public $username="";
-    public $listdomains = ["boxmails.net", "mail24h.store", "gmail79.store"];
+    public $listdomains = ["boxmails.net", "mail24h.store", "gmail79.store", "gmailapi.live", "shopgmail.store"];
 
     protected $listeners = ['refreshComponent' => '$refresh'];
     
