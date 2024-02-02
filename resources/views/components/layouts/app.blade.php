@@ -1,3 +1,5 @@
+{{-- https://material-dashboard-laravel.creative-tim.com/documentation/getting-started/installation.html?_ga=2.196763695.22834434.1706864546-662723754.1706864546 --}}
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -7,13 +9,12 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js', 'assets/css/nucleo-icons.css', 'assets/css/nucleo-svg.css','assets/css/material-kit.css?v=3.0.4',
         'assets/js/core/bootstrap.min.js','assets/js/plugins/perfect-scrollbar.min.js','assets/js/plugins/moment.min.js',
-        'assets/js/plugins/nouislider.min.js','assets/js/plugins/glidejs.min.js','assets/js/plugins/choices.min.js','assets/vendor/@fortawesome/fontawesome-free/css/all.min.css',
-        ''])
+        'assets/js/plugins/choices.min.js'])
         {{-- assets/css/vendor.css --}}
         @livewireStyles 
 
-        <script data-navigate-once src="bootstrap.min.js"></script>
-        <script data-navigate-once src="material-kit.css"></script>
+        {{-- <script data-navigate-once src="bootstrap.min.js"></script>
+        <script data-navigate-once src="material-kit.css"></script> --}}
 
         <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
         <link rel="icon" type="image/png" href="./assets/img/favicon.png">

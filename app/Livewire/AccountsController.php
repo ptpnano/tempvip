@@ -8,6 +8,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
@@ -25,6 +26,9 @@ class AccountsController extends Component
     public $tms = true;
     public $show_create = "0";
     
+    public $domain="";
+    public $username="";
+    public $listdomains = ["boxmails.net", "mail24h.store", "gmail79.store"];
 
     protected $listeners = ['refreshComponent' => '$refresh'];
     
@@ -45,7 +49,7 @@ class AccountsController extends Component
         //dd($this -> token);
         //Session::put('mail', "tms");
         //dd($this -> token);
-        $accounts = Accounts::all()->where('email','=',$this->token['cur']);
+        //$accounts = Accounts::all()->where('email','=',$this->token['cur']);
         $listemails = Emails::all()->where('email','=',$this->token['cur']);
 
         //dd($accounts);
@@ -58,13 +62,15 @@ class AccountsController extends Component
         }
 
         return view('livewire.accounts-controller', [
-            'accounts' => $accounts,
+            //'accounts' => $accounts,
             'listemails' => $listemails,
+            'listdomains' => $this -> listdomains,
         ]);
     }
 
     public function refreshComponent(){
-        $accounts = Accounts::all()->where('email','=',$this->token['cur']);
+        //$accounts = Accounts::all()->where('email','=',$this->token['cur']);
+        
         //dd($accounts);
         //return view('livewire.accounts-controller');
         //dd($this -> token);
@@ -107,18 +113,31 @@ class AccountsController extends Component
 
     public function save()
     {
-        $this -> mail = $this -> email;
-
-        $this -> token['cur'] = $this -> email;
-
-        if (!in_array($this -> email, $this -> token['emails'] ?? []))
-        {
-            $this -> token['emails'][] = $this -> email; 
-            //$this -> ss -> token = $this -> token;
+        if(count($this->token['emails'] ?? [])>=10){
+            return redirect()->to('/inbox');
         }
-        //$this -> token -> push($this -> email);
-        //$this -> token = $this -> email;
-        return redirect()->to('/inbox');
+        if(!empty($this -> username) && !empty($this -> domain)){
+            $this -> email = $this -> username . "@" . $this -> domain;
+            //dd($this -> domain);
+            $this -> mail = $this -> email;
+            $this -> token['cur'] = $this -> email;
+            if (!in_array($this -> email, $this -> token['emails'] ?? []))
+            {
+                $this -> token['emails'][] = $this -> email; 
+                //$this -> ss -> token = $this -> token;
+            }
+            //$this -> token -> push($this -> email);
+            //$this -> token = $this -> email;
+            return redirect()->to('/inbox');
+        }
+        
+    }
+
+    public function save_random()
+    {
+        $this -> username = Str::lower(Str::random(rand(12,20)));
+        $this -> domain = $this-> listdomains[array_rand($this-> listdomains)];
+        return $this -> save();
     }
 
     public function remove()
@@ -137,5 +156,11 @@ class AccountsController extends Component
             $this -> token['emails'] = $temp;       
         }
         return redirect()->to('/inbox');
+    }
+
+    public function setDomain($dm)
+    {
+        //dd($dm);
+        $this -> domain = $dm;
     }
 }

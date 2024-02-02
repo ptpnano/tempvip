@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // }) -> name('index');
+
+//mail24h.store|gmail79.store
+
 Route::get('/', AccountsController::class) -> name('inbox');
 Route::get('inbox', AccountsController::class) -> name('inbox');
 

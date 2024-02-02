@@ -6,29 +6,62 @@
 
         <section class="pt-3 pb-4" id="count-stats">
             <div class="container">
-                <div class="row" x-data="{ create: 1 }">
-                    <div >
-                        <form x-show="create == {{ $show_create }}" wire:submit="save">
-                            <div class="row">
-                                <div class="col-md-6">
-                                <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Email</label>
-                                    <input required type="email" class="form-control" wire:model="email">
+                <div class="row" x-data="{ create: 1, domain: false }">
+                    <div class="flex">
+                        <div class="col-md-12">
+                            <form x-show="create == {{ $show_create }}" wire:submit="save">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        {{-- <div class="input-group input-group-outline my-3">
+                                            <label class="form-label">Username</label>
+                                            <input required type="text" class="form-control" wire:model="username">
+                                        </div> --}}
+                                        <div class="input-group input-group-static mb-4">
+                                            <label>Username</label>
+                                            <input required type="text" class="form-control" wire:model="username" value="{{ $username }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 cursor-pointer">
+                                        <div class="input-group input-group-static mb-4" x-on:click="domain = true">
+                                            <label>Domain</label>
+                                            
+                                            <input required type="text" class="form-control cursor-pointer dropdown-toggle"  wire:model="domain" value="{{ $domain }}" readonly>
+                                            
+                                        </div>
+                                        <div class="position-relative">
+                                            <div class="card w-100" x-show="domain" style="background-color: #f8f9fa !important; position: absolute; z-index: 1000">
+                                                <div class="nav-wrapper position-relative end-0" x-show="domain" x-on:click="domain = false" @click.away="domain = false">
+                                                    {{-- <label>LIST DOMAIN</label> --}}
+                                                    @foreach($listdomains as $k => $v)
+                                                        <div class="nav-item rounded-md shadow-xs max-h-96 overflow-y-auto py-1">
+                                                            <a class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out nav-link"
+                                                            wire:click="setDomain('{{ $v }}')">{{ $v }}</a> 
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group input-group-outline my-3">
+                                            <button type="submit" class="btn btn-primary w-100">Create</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group input-group-outline my-3">
+                                            <button wire:click="save_random(); return;" class="btn btn-primary w-100">Random</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                </div>
-                                <div class="col-md-6">
-                                <div class="input-group input-group-outline my-3">
-                                    <button type="submit" class="btn btn-info w-100">Save</button>
-                                </div>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
 
                     @if(!empty($mail))
                         <div x-data="{ open: false }">
                             <div class="position-relative">
-                                <button @click.away="open = false" x-on:click="open = !open" class="dropdown-toggle btn btn-outline-info w-100" style="text-transform: none;">{{ $mail }}</button>
+                                <button id="email" value="{{ $mail }}" @click.away="open = false" x-on:click="open = !open" class="dropdown-toggle btn btn-outline-info w-100" style="text-transform: none;">{{ $mail }}</button>
                                 <div class="card w-100" x-show="open" style="background-color: #f8f9fa !important; position: absolute; z-index: 1000">
                                     <div class="nav-wrapper position-relative end-0">
                                         @foreach ($token as $key => $value)
@@ -51,13 +84,13 @@
 
                     
                     <div class="col-md-3"> 
-                        <button type="button" class="btn btn-info w-100"><i class="far fa-copy me-1"></i>Copy</button>
+                        <button id="copy" type="button" class="btn btn-info w-100" onclick="copyToClipboard()"><i class="far fa-copy me-1"></i>Copy</button>
                     </div>
                     <div class="col-md-3">
                         <button wire:click="refreshComponent" type="button" class="btn btn-info w-100"><i class="refresh fas fa-sync-alt fa-spin me-1"></i>Refresh</button>
                     </div>
                     <div class="col-md-3">
-                        <button x-on:click="create = !create" type="button" class="btn btn-info w-100"><i class="far fa-plus-square me-1"></i>New</button>
+                        <button x-on:click="create = !create" type="button" class="btn btn-info w-100"><i class="far fa-plus-square me-1"></i>Add</button>
                     </div>
                     <div class="col-md-3">
                         <button wire:click="remove()" type="button" class="btn btn-info w-100 bg-blue"><i class="far fa-trash-alt me-1"></i>Remove</button>
@@ -155,25 +188,25 @@
                         <div class="row">
                             <div class="col-md-4 position-relative">
                                 <div class="p-3 text-center">
-                                    <h1 class="text-gradient text-primary"><span id="state1" countTo="70">0</span>+</h1>
-                                    <h5 class="mt-3">Coded Elements</h5>
-                                    <p class="text-sm font-weight-normal">From buttons, to inputs, navbars, alerts or cards, you are covered</p>
+                                    <h1 class="text-gradient text-primary"><span id="state1" countTo="70"><i class="fa fa-lock" aria-hidden="true"></i></span></h1>
+                                    <h5 class="mt-3">Secure</h5>
+                                    <p class="text-sm font-weight-normal">Your email address is protected by a reliable password, generated randomly in your browser, providing a barrier against unauthorized access and potential breaches.</p>
                                 </div>
                                 <hr class="vertical dark">
                             </div>
                             <div class="col-md-4 position-relative">
                                 <div class="p-3 text-center">
-                                    <h1 class="text-gradient text-primary"> <span id="state2" countTo="15">0</span>+</h1>
-                                    <h5 class="mt-3">Design Blocks</h5>
-                                    <p class="text-sm font-weight-normal">Mix the sections, change the colors and unleash your creativity</p>
+                                    <h1 class="text-gradient text-primary"> <span id="state2" countTo="15"><i class="fa fa-user" aria-hidden="true"></i></span></h1>
+                                    <h5 class="mt-3">Instant</h5>
+                                    <p class="text-sm font-weight-normal">No more wasting precious time on registrations, form-filling, or solving captchas. Your temp email address is ready for use instantly, putting you in control effortlessly.</p>
                                 </div>
                                 <hr class="vertical dark">
                             </div>
                             <div class="col-md-4">
                                 <div class="p-3 text-center">
-                                    <h1 class="text-gradient text-primary" id="state3" countTo="4">0</h1>
-                                    <h5 class="mt-3">Pages</h5>
-                                    <p class="text-sm font-weight-normal">Save 3-4 weeks of work when you use our pre-made pages for your website</p>
+                                    <h1 class="text-gradient text-primary" id="state3" countTo="4"><i class="fa fa-clock" aria-hidden="true"></i></h1>
+                                    <h5 class="mt-3">Fast</h5>
+                                    <p class="text-sm font-weight-normal">Experience fast message delivery without the hassles of delays or restrictions. Our service is finely tuned for maximum delivery speed, ensuring you stay connected seamlessly.</p>
                                 </div>
                             </div>
                         </div>
@@ -184,34 +217,30 @@
 
     @endif
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Subject</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Đây là nơi hiển thị nội dung Email
-                    Đây là nơi hiển thị nội dung Email
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     @script
         <script>
             setInterval(() => {
                 $wire.$refresh()
             }, 5000)
         </script>
+        
     @endscript
+
+    <script>
+        function copyToClipboard() {
+            //var fullPath = "tms";
+            //alert('tms');
+            const tempInput = document.createElement('input');
+            tempInput.setAttribute('value', document.getElementById('email').value);
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            // document.getElementById('email').select();
+            // document.execCommand('copy');
+        }
+    </script>
         
 </div>
 

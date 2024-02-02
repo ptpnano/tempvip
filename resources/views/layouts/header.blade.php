@@ -1,8 +1,11 @@
 <div class="container position-sticky z-index-sticky top-0"><div class="row"><div class="col-12">
     <nav class="navbar navbar-expand-lg  blur border-radius-xl top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
         <div class="container-fluid px-0">
-            <a class="navbar-brand font-weight-bolder ms-sm-3" href="/index.php" rel="tooltip" title="Temp mail, Temp mail free" data-placement="bottom" target="_self">
+            <a class="navbar-brand font-weight-bolder ms-sm-3" href="/inbox" rel="tooltip" title="Temp mail, Temp mail free" data-placement="bottom" target="_self">
                 Home
+            </a>
+            <a class="navbar-brand font-weight-bolder ms-sm-3" href="#" rel="tooltip" title="Temp mail, Temp mail free" data-placement="bottom" target="_self">
+                API
             </a>
             <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon mt-2">
@@ -14,19 +17,19 @@
             <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100" id="navigation">
                 <ul class="navbar-nav navbar-nav-hover ms-auto">
                     <li class="nav-item ms-lg-auto">
-                        <a class="nav-link nav-link-icon me-2" href="#" target="_blank">
+                        <a class="nav-link nav-link-icon me-2" href="#" target="_self">
                             <i class="fa fa-code me-1"></i>
                             <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cookie Policy">Cookie Policy</p>
                         </a>
                     </li>
                     <li class="nav-item ms-lg-auto">
-                        <a class="nav-link nav-link-icon me-2" href="#" target="_blank">
+                        <a class="nav-link nav-link-icon me-2" href="#" target="_self">
                             <i class="fa fa-lock me-1"></i>
                             <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Terms">Terms</p>
                         </a>
                     </li>
                     <li class="nav-item ms-lg-auto">
-                        <a class="nav-link nav-link-icon me-2" href="#" target="_blank">
+                        <a class="nav-link nav-link-icon me-2" href="#" target="_self">
                             <i class="fa fa-arrow-right me-1"></i>
                             <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Terms">Privacy Policy</p>
                         </a>
